@@ -17,6 +17,7 @@
     _id: string;
     webName: string;
     webStatus: string;
+    latencyTime: number;
   }
   export interface UpdatedWebCardData {
     webName: string;

@@ -32,7 +32,6 @@ const App: React.FC = () => {
     setSelectedWebCard(webCardData);
     refetch();
   };
-
   return (
     <div>
       <div className="table-title">
@@ -40,15 +39,13 @@ const App: React.FC = () => {
         <button onClick={handleAddWebCard} className="add-button">
           New Web
         </button>
-        <button className="get-button">
-          get status...
-        </button>
       </div>
       <table className="table-fill">
         <thead>
           <tr>
             <th className="text-left">Name</th>
             <th className="text-left">Status</th>
+            <th className="text-left">Latency Time</th>
           </tr>
         </thead>
         <tbody className="table-hover">

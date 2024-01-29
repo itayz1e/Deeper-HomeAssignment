@@ -13,7 +13,6 @@ import { getWebCards } from "../services/Http_Services/httpClient";
 function WebCard({ onClick }: WebCardProps) {
   const { data, status } = useQuery("webCard", getWebCards);
   const webCards: WebCardData[] = data || [];
-
   // Render success state
   const handleCardClick: React.MouseEventHandler<HTMLTableRowElement> = (
     event
@@ -41,6 +40,10 @@ function WebCard({ onClick }: WebCardProps) {
           <td className="text-left">{webCard.webName}</td>
           <td className="text-left">
             <StatusMark status={webCard.webStatus} />
+          </td>
+          <td className="text-left">
+            {/* {<div>Latency Time:{webCard.latencyTime}</div> && <div>Latency Time:0.20ms</div>} */}
+            <div>Latency Time: {webCard.latencyTime}ms</div>
           </td>
         </tr>
       ))}
