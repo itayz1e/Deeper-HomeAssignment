@@ -4,6 +4,7 @@ import StatusMark from "./StatusMark";
 import { WebCardData, WebCardProps } from "../models/interface";
 // ** React Imports
 import React, { useEffect, useState } from "react";
+// ** Third Party Imports
 import { getWebCards } from "../services/Http_Services/httpClient";
 
 function WebCard({ onClick }: WebCardProps) {
@@ -14,7 +15,7 @@ function WebCard({ onClick }: WebCardProps) {
       const webCardDB = await getWebCards();
       setWebCards(webCardDB);
     })();
-  }, [webCards]);
+  }, []);
 
   // Render the card information by ID
   const handleCardClick: React.MouseEventHandler<HTMLTableRowElement> = (

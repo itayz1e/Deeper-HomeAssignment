@@ -1,11 +1,10 @@
 // ** style Imports
 import "../style/StatusMark.scss";
+// ** Model Imports
+import { StatusMarkProps } from "../models/interface";
 // ** React Imports
 import React from 'react';
 
-interface StatusMarkProps {
-  status: string;
-}
 
 const StatusMark: React.FC<StatusMarkProps> = ({ status }) => {
   const getStatusClassName = () => {

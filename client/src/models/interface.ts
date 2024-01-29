@@ -22,3 +22,7 @@
     webName: string;
     webStatus: string;
   }
+
+  export interface StatusMarkProps {
+    status: string;
+  }
