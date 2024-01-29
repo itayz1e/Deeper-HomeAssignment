@@ -1,14 +1,13 @@
+require('dotenv').config()
 import express from "express";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-require('dotenv').config()
+import webCardRouter from "./API/web/webCardRouter";
 
 
 const app = express();
 dotenv.config();
 app.use(express.json());
-
-
 
 const uri: string | undefined = process.env.MONGODB_URI;
 if (uri) {
@@ -22,10 +21,9 @@ if (uri) {
   console.log("No URI to DB");
 }
 
-
-
 //static file
-app.use(express.static("./client/dist"));
+app.use(express.static("./client"));
+app.use('/api/web', webCardRouter)
 
 app.listen(3000, () => {
   console.log("server listen on port 3000");
