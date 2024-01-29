@@ -1,36 +1,36 @@
 // ** style Imports
-import './App.scss';
+import "./App.scss";
 // ** Components Imports
-import WebCard from './components/WebCard';
-import NewWebCard from './components/NewWebCard';
-import WebCardDetails from './components/WebCardDetails ';
+import WebCard from "./components/WebCard";
+import NewWebCard from "./components/NewWebCard";
+import WebCardDetails from "./components/WebCardDetails ";
 // ** Model Imports
-import { UpdatedWebCardData, WebCardData } from './models/interface';
+import { UpdatedWebCardData, WebCardData } from "./models/interface";
 // ** React Imports
-import React, { useState } from 'react';
-
+import React, { useState } from "react";
+import { getWebCards } from "./services/Http_Services/httpClient";
+import { useQuery } from "react-query";
 
 const App: React.FC = () => {
   const [isNewWebCardVisible, setIsNewWebCardVisible] = useState(false);
-  const [selectedWebCard, setSelectedWebCard] = useState<WebCardData | null>(null);
+  const [selectedWebCard, setSelectedWebCard] = useState<WebCardData | null>(
+    null
+  );
+  const { refetch } = useQuery("webCard", getWebCards);
 
   // Pops-up a creation window
   const handleAddWebCard = () => {
     setIsNewWebCardVisible(!isNewWebCardVisible);
+    refetch();
   };
 
-  const handleCreateCard = (newCard: WebCardData) => {
-    console.log('New card created:', { ...newCard });
+  const handleCreateCard = () => {
+    refetch();
   };
-  
 
   const handleCardClick = (webCardData: WebCardData) => {
     setSelectedWebCard(webCardData);
-  };
-
-  const handleUpdateWebCard = (updateCard: UpdatedWebCardData) => {
-    
-    console.log('Web card updated', updateCard);
+    refetch();
   };
 
   return (
@@ -39,6 +39,9 @@ const App: React.FC = () => {
         <h3>Monitoring websites</h3>
         <button onClick={handleAddWebCard} className="add-button">
           New Web
+        </button>
+        <button className="get-button">
+          get status...
         </button>
       </div>
       <table className="table-fill">
@@ -55,14 +58,17 @@ const App: React.FC = () => {
       {selectedWebCard && (
         <div className="modal-overlay">
           <div className="modal">
-            <span className="close-btn" onClick={() => setSelectedWebCard(null)}>
+            <span
+              className="close-btn"
+              onClick={() => setSelectedWebCard(null)}
+            >
               X
             </span>
             <WebCardDetails
               webName={selectedWebCard.webName}
               webStatus={selectedWebCard.webStatus}
-              onUpdateCard={handleUpdateWebCard}
               onClose={() => setSelectedWebCard(null)}
+              _id={selectedWebCard._id}
             />
           </div>
         </div>
@@ -70,10 +76,16 @@ const App: React.FC = () => {
       {isNewWebCardVisible && (
         <div className="modal-overlay">
           <div className="modal">
-            <span className="close-btn" onClick={() => setIsNewWebCardVisible(false)}>
+            <span
+              className="close-btn"
+              onClick={() => setIsNewWebCardVisible(false)}
+            >
               X
             </span>
-            <NewWebCard onClose={() => setIsNewWebCardVisible(false)} onCreateCard={handleCreateCard} />
+            <NewWebCard
+              onClose={() => setIsNewWebCardVisible(false)}
+              onCreateCard={handleCreateCard}
+            />
           </div>
         </div>
       )}

@@ -7,17 +7,12 @@ import React from "react";
 // ** Third Party Imports
 import { handleCreateCard } from "../services/Http_Services/httpClient";
 
-
-
 const NewWebCard: React.FC<NewWebCardProps> = ({ onClose, onCreateCard }) => {
-
-
   return (
     <div className="row">
       <div className="col-md-12">
-      <form onSubmit={(e) => handleCreateCard(e, onCreateCard, onClose)}>
+        <form onSubmit={(e) => handleCreateCard(e, onCreateCard, onClose)}>
           <h1>New Web</h1>
-
           <fieldset>
             <label>Web Name:</label>
             <input type="text" name="webName" required />
@@ -35,8 +30,9 @@ const NewWebCard: React.FC<NewWebCardProps> = ({ onClose, onCreateCard }) => {
               </option>
             </select>
           </fieldset>
-
-          <button className="UpdateBtn" type="submit">create</button>
+          <button className="UpdateBtn" type="submit">
+            create
+          </button>
         </form>
       </div>
     </div>

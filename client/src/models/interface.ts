@@ -8,13 +8,13 @@
   }
   
   export interface WebCardDetailsProps {
+    _id: string;
     webName: string;
     webStatus: string;
-    onUpdateCard: (updateCard: UpdatedWebCardData) => void;
     onClose: () => void;
   }
   export interface WebCardData {
-    _id: string | undefined;
+    _id: string;
     webName: string;
     webStatus: string;
   }
