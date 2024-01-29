@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 interface WebCard {
   webName: string;
   webStatus: string;
+  latencyTime: number;
 }
 
 export const WebCardSchema = new Schema<WebCard>({
@@ -13,6 +14,10 @@ export const WebCardSchema = new Schema<WebCard>({
   webStatus: {
     type: String,
     require: true,
+  },
+  latencyTime: {
+    type: Number,
+    require: false,
   },
 });
 

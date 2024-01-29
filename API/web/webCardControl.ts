@@ -18,12 +18,38 @@ export async function addWebCard(req: any, res: any) {
 export async function getAllWebCards(req: any, res: any) {
   try {
     const webCardDB = await WebCardModel.find({});
-    res.send({ ok: true, webCardDB });
+    
+    // Process each web card to add status-specific information
+    const processedWebCards = webCardDB.map((webCard) => {
+      let latencyTime = 0;
+
+      // Check the status and set the latencyTime accordingly
+      switch (webCard.webStatus) {
+        case 'green':
+          latencyTime = 0.20;
+          break;
+        case 'orange':
+          latencyTime = 0.50;
+          break;
+        case 'red':
+          latencyTime = 1.0;
+          break;
+        default:
+          latencyTime = -0;
+          break;
+      }
+      return {
+        ...webCard.toObject(),
+        latencyTime,
+      };
+    });
+    res.send({ ok: true, webCardDB: processedWebCards });
   } catch (error: any) {
-    console.error("cant get webCards");
+    console.error("Can't get webCards");
     res.status(500).send({ ok: false, error });
   }
 }
+
 
 // Update one cards by id
 export const UpdateWebCardDetails = async (req: any, res: any) => {
