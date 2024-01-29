@@ -1,10 +1,10 @@
  export interface NewWebCardProps {
     onClose: () => void;
-    onCreateCard: (newCard: { webName: string; webStatus: string }) => void;
+    onCreateCard: (newCard: { webName: string; webStatus: string; _id:string }) => void;
   }
 
   export interface WebCardProps {
-    onClick: (webCardData: { webName: string; webStatus: string }, event: React.MouseEvent) => void;
+    onClick: (webCard: WebCardData, event: React.MouseEvent<HTMLTableRowElement>) => void;
   }
   
   export interface WebCardDetailsProps {
@@ -14,6 +14,7 @@
     onClose: () => void;
   }
   export interface WebCardData {
+    _id: string | undefined;
     webName: string;
     webStatus: string;
   }

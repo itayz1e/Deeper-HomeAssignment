@@ -1,28 +1,50 @@
 // ** Components Imports
-import StatusMark from './StatusMark';
+import StatusMark from "./StatusMark";
 // ** Model Imports
-import { WebCardProps } from '../models/interface';
+import { WebCardData, WebCardProps } from "../models/interface";
 // ** React Imports
-import React from 'react';
-
+import React, { useEffect, useState } from "react";
+import { getWebCards } from "../services/Http_Services/httpClient";
 
 function WebCard({ onClick }: WebCardProps) {
-  const webCardData = {
-    webName: 'google',
-    webStatus: 'green',
-  };
+  const [webCards, setWebCards] = useState<WebCardData[]>([]);
 
-  const handleCardClick = (event: React.MouseEvent) => {
-    onClick(webCardData, event);
+  useEffect(() => {
+    (async () => {
+      const webCardDB = await getWebCards();
+      setWebCards(webCardDB);
+    })();
+  }, [webCards]);
+
+  // Render the card information by ID
+  const handleCardClick: React.MouseEventHandler<HTMLTableRowElement> = (
+    event
+  ) => {
+    const webCardId = event.currentTarget.dataset.webCardId;
+    const clickedWebCard = webCards.find(
+      (webCard) => webCard._id === webCardId
+    );
+    if (clickedWebCard) {
+      onClick(clickedWebCard, event);
+    }
   };
 
   return (
-    <tr onClick={handleCardClick} style={{ cursor: 'pointer' }}>
-      <td className="text-left">{webCardData.webName}</td>
-      <td className="text-left">
-        <StatusMark status={webCardData.webStatus} />
-      </td>
-    </tr>
+    <>
+      {webCards.map((webCard, _id) => (
+        <tr
+          key={_id}
+          onClick={handleCardClick}
+          style={{ cursor: "pointer" }}
+          data-web-card-id={webCard._id}
+        >
+          <td className="text-left">{webCard.webName}</td>
+          <td className="text-left">
+            <StatusMark status={webCard.webStatus} />
+          </td>
+        </tr>
+      ))}
+    </>
   );
 }
 

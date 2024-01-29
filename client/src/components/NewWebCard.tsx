@@ -4,22 +4,18 @@ import "../style/FormPopup.scss";
 import { NewWebCardProps } from "../models/interface";
 // ** React Imports
 import React from "react";
+// ** Third Party Imports
+import { handleCreateCard } from "../services/Http_Services/httpClient";
+
 
 
 const NewWebCard: React.FC<NewWebCardProps> = ({ onClose, onCreateCard }) => {
-  function handleCreateCard(e: React.FormEvent) {
-    e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    const name = form.webName.value;
-    const select = form.form_web.value;
-    onCreateCard({ webName: name, webStatus: select });
-    onClose();
-  }
+
 
   return (
     <div className="row">
       <div className="col-md-12">
-        <form onSubmit={handleCreateCard}>
+      <form onSubmit={(e) => handleCreateCard(e, onCreateCard, onClose)}>
           <h1>New Web</h1>
 
           <fieldset>

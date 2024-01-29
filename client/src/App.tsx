@@ -20,8 +20,9 @@ const App: React.FC = () => {
   };
 
   const handleCreateCard = (newCard: WebCardData) => {
-    console.log('New card created:', newCard);
+    console.log('New card created:', { ...newCard });
   };
+  
 
   const handleCardClick = (webCardData: WebCardData) => {
     setSelectedWebCard(webCardData);
