@@ -30,7 +30,6 @@ export const handleNameChange = (
 ) => {
   e.preventDefault();
   setUpdatedWebName(e.target.value);
-  console.log(e.target.value);
 };
 
 // Managing the status value change
