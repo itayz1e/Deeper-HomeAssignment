@@ -5,39 +5,52 @@ import WebCard from "./components/WebCard";
 import NewWebCard from "./components/NewWebCard";
 import WebCardDetails from "./components/WebCardDetails ";
 // ** Model Imports
-import { UpdatedWebCardData, WebCardData } from "./models/interface";
+import { WebCardData } from "./models/interface";
 // ** React Imports
 import React, { useState } from "react";
-import { getWebCards } from "./services/Http_Services/httpClient";
-import { useQuery } from "react-query";
+import { useQueryClient } from "react-query";
+// ** Third Party Imports
+import { QueryKeys } from "./utils/queryKeys.ts";
 
 const App: React.FC = () => {
   const [isNewWebCardVisible, setIsNewWebCardVisible] = useState(false);
   const [selectedWebCard, setSelectedWebCard] = useState<WebCardData | null>(
     null
   );
-  const { refetch } = useQuery("webCard", getWebCards);
+  const queryClient = useQueryClient();
 
+  const handleRefetchWebCards = async () => {
+    await queryClient.refetchQueries([QueryKeys.WebCards]);
+  };
   // Pops-up a creation window
-  const handleAddWebCard = () => {
+  const handleAddWebCard = async () => {
     setIsNewWebCardVisible(!isNewWebCardVisible);
-    refetch();
+    await handleRefetchWebCards();
   };
 
-  const handleCreateCard = () => {
-    refetch();
+  const handleCreateCard = async () => {
+    await handleRefetchWebCards();
   };
 
-  const handleCardClick = (webCardData: WebCardData) => {
+  const handleCardClick = async (webCardData: WebCardData) => {
     setSelectedWebCard(webCardData);
-    refetch();
+    await handleRefetchWebCards();
   };
+
+  const handleCloseWebCard = async () => {
+    setSelectedWebCard(null);
+    await handleRefetchWebCards();
+  };
+
   return (
     <div>
       <div className="table-title">
         <h3>Monitoring websites</h3>
         <button onClick={handleAddWebCard} className="add-button">
-          New Web
+        <i className="fas fa-plus"></i> New Web
+        </button>
+        <button id="refreshButton" onClick={handleRefetchWebCards} className="get-button">
+          <i className="fas fa-sync-alt"></i> Refresh
         </button>
       </div>
       <table className="table-fill">
@@ -64,7 +77,7 @@ const App: React.FC = () => {
             <WebCardDetails
               webName={selectedWebCard.webName}
               webStatus={selectedWebCard.webStatus}
-              onClose={() => setSelectedWebCard(null)}
+              onClose={handleCloseWebCard}
               _id={selectedWebCard._id}
             />
           </div>

@@ -1,17 +1,6 @@
 // ** Third Party Imports
 import axios from "axios";
 
-// webCard Http Api calls
-export const getWebCards = async () => {
-  try {
-    const { data } = await axios.get(`/api/web/get-web-cards`);
-    return data.webCardDB;
-  } catch (error) {
-    console.error("Error fetching web cards:", error);
-    return [];
-  }
-};
-
 // A call to the server to create a card
 export const handleCreateCard = async (
   e: React.FormEvent,
@@ -49,7 +38,7 @@ export const handleUpdateCard = async (
   onClose: () => void
 ) => {
   try {
-    const { data } = await axios.put(`/api/web/update-web-card?_id=${_id}`, {
+    await axios.put(`/api/web/update-web-card?_id=${_id}`, {
       webName: updatedWebName,
       webStatus: updatedWebStatus,
     });
@@ -67,7 +56,7 @@ export const handleDeleteCard = async (
 ) => {
   try {
     if (confirm(`Are you sure you want to delete the card: ${webName}`)) {
-      const data = await axios.delete(`/api/web/delete-web-card?_id=${_id}`);
+      await axios.delete(`/api/web/delete-web-card?_id=${_id}`);
       onClose();
     }
   } catch (error) {

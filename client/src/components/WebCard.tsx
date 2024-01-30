@@ -1,26 +1,20 @@
 // ** Components Imports
 import StatusMark from "./StatusMark";
 // ** Model Imports
-import { WebCardData, WebCardProps } from "../models/interface";
+import { WebCardProps } from "../models/interface";
 // ** React Imports
 import React from "react";
-import { useQuery } from "react-query";
 // ** Third Party Imports
-import { getWebCards } from "../services/Http_Services/httpClient";
-
-
+import { useGetWebCards } from "../hooks/useGetWebCards.ts";
 
 function WebCard({ onClick }: WebCardProps) {
-  const { data, status } = useQuery("webCard", getWebCards);
-  const webCards: WebCardData[] = data || [];
+  const { data, status, error } = useGetWebCards();
   // Render success state
   const handleCardClick: React.MouseEventHandler<HTMLTableRowElement> = (
     event
   ) => {
     const webCardId = event.currentTarget.dataset.webCardId;
-    const clickedWebCard = webCards.find(
-      (webCard) => webCard._id === webCardId
-    );
+    const clickedWebCard = data?.find((webCard) => webCard._id === webCardId);
     if (clickedWebCard) {
       onClick(clickedWebCard, event);
     }
@@ -28,9 +22,9 @@ function WebCard({ onClick }: WebCardProps) {
 
   return (
     <>
-      {status === "error" && <div>err</div>}
+      {status === "error" && <div>{error?.toString() ?? "Error"}</div>}
       {status === "loading" && <div>Loading...</div>}
-      {webCards.map((webCard, _id) => (
+      {data?.map((webCard, _id) => (
         <tr
           key={_id}
           onClick={handleCardClick}
@@ -42,7 +36,6 @@ function WebCard({ onClick }: WebCardProps) {
             <StatusMark status={webCard.webStatus} />
           </td>
           <td className="text-left">
-            {/* {<div>Latency Time:{webCard.latencyTime}</div> && <div>Latency Time:0.20ms</div>} */}
             <div>Latency Time: {webCard.latencyTime}ms</div>
           </td>
         </tr>

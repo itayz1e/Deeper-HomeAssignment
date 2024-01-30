@@ -28,8 +28,17 @@ div.table-title {
   display: inline-block;
   font-size: 16px;
   margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid white;
   cursor: pointer;
 }
+
+.add-button:hover {
+  border: 1px solid black;
+  color: black;
+  background-color: #3e94ec;
+}
+
 .get-button {
   background-color: rgb(1, 128, 7);
   color: white;
@@ -40,14 +49,12 @@ div.table-title {
   display: inline-block;
   font-size: 16px;
   margin-right: 10px;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.add-button:hover {
-  border: 1px solid black;
-  color: black;
-  background-color: #3e94ec;
-}
 .get-button:hover {
   border: 1px solid black;
   color: black;
@@ -65,7 +72,6 @@ div.table-title {
 }
 
 // Table Styles
-
 .table-fill {
   background: white;
   border-radius: 3px;
@@ -178,9 +184,7 @@ td.text-right {
   text-align: right;
 }
 
-
-
-  .close-btn{
-    border: 1px solid black;
-    color: red !important;
-  }
+.close-btn {
+  border: 1px solid black;
+  color: red !important;
+}

@@ -53,11 +53,15 @@ const WebCardDetails: React.FC<WebCardDetailsProps> = ({
               required
             >
               <option value="">Select Status</option>
-              <option className="greenText" value="green">green - Latency below 20 ms.</option>
+              <option className="greenText" value="green">
+                green - Latency below 20 ms.
+              </option>
               <option className="orangeText" value="orange">
                 orange - Latency between 20 ms and 50 ms.
               </option>
-              <option className="redText" value="red">red - Latency over 50 ms</option>
+              <option className="redText" value="red">
+                red - Latency over 50 ms
+              </option>
             </select>
           </fieldset>
           <button className="UpdateBtn" type="submit">
